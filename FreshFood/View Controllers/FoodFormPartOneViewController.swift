@@ -53,7 +53,7 @@ class FoodFormPartOneViewController: UIViewController, UITextFieldDelegate {
      */
     func initialSetUp() {
         //Check to see if this is an edit segue identifier
-        if segueIdentifier == "EditGroceryItem" {
+        if segueIdentifier == "EditFoodItem" {
             //Check and set the selected storage space for the grocery item
             switch(foodItem.getStorageSpace()) {
             case "Freezer":
