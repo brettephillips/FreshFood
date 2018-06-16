@@ -105,13 +105,17 @@ class GroceryListViewController: UITableViewController, MFMessageComposeViewCont
         //Create an add to storage action
         let addToStorage = UITableViewRowAction(style: .normal, title: "Add To Storage") { action, index in
             //Creates a new food model object
-            let foodItem = FoodModel(storageSpace: self.groceryList[editActionsForRowAt.row].getStorageSpace(), name: self.groceryList[editActionsForRowAt.row].getName(), quantity: self.groceryList[editActionsForRowAt.row].getQuantity(), image: "unknown", expirationDate: Date())
+            let foodItem = FoodModel(storageSpace: self.groceryList[editActionsForRowAt.row].getStorageSpace(), name: self.groceryList[editActionsForRowAt.row].getName(), quantity: self.groceryList[editActionsForRowAt.row].getQuantity(), image: "unknown", expirationDate: Date(), notificationIdentifier: "unknown")
             
             //Adds the food item to the food list array and deletes it from the grocery list
             //array and data source
             self.foodInstance.add(foodItem: foodItem)
             self.groceryInstance.delete(groceryItem: self.groceryList[editActionsForRowAt.row])
             tableView.deleteRows(at: [editActionsForRowAt], with: .automatic)
+            
+            if self.groceryList.count == 0 {
+                self.navigationItem.leftBarButtonItem?.isEnabled = false
+            }
         }
         
         //Create a delete action
@@ -135,10 +139,17 @@ class GroceryListViewController: UITableViewController, MFMessageComposeViewCont
     }
     
     /**
+     * Overriden function to make the tableview rows larger.
+     */
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55.0
+    }
+    
+    /**
      * Overriden function to run everytime the view appears on the
      * screen.
      */
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         //Reload the tableview
         tableView.reloadData()
         //Validate the grocery list

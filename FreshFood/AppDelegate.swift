@@ -21,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      * library.
      */
     func getAuthorization() {
+        //Request authorization for the photo library
+        PHPhotoLibrary.requestAuthorization { (status) in
+            print(status)
+        }
+        
         //Request authorization for notifications
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) {
             (success, error) in
@@ -29,11 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 print("success")
             }
-        }
-        
-        //Request authorization for the photo library
-        PHPhotoLibrary.requestAuthorization { (status) in
-            print(status)
         }
     }
     

@@ -19,15 +19,17 @@ class FoodModel: Object {
     @objc dynamic var quantity = 1
     @objc dynamic var image = ""
     @objc dynamic var expirationDate = Date()
+    @objc dynamic var notificationIdentifier = ""
     
     //Convenience Initializer
-    convenience init(storageSpace: String, name: String, quantity: Int, image: String, expirationDate: Date) {
+    convenience init(storageSpace: String, name: String, quantity: Int, image: String, expirationDate: Date, notificationIdentifier: String) {
         self.init()
         self.set(storageSpace: storageSpace)
         self.set(name: name)
         self.set(quantity: quantity)
         self.set(image: image)
         self.set(expirationDate: expirationDate)
+        self.set(notificationIdentifier: notificationIdentifier)
     }
     
     //Accessors
@@ -51,6 +53,10 @@ class FoodModel: Object {
         return expirationDate
     }
     
+    func getNotificationIdentifier() -> String {
+        return notificationIdentifier
+    }
+    
     //Mutators
     func set(storageSpace: String) {
         self.storageSpace = storageSpace
@@ -70,5 +76,9 @@ class FoodModel: Object {
     
     func set(expirationDate: Date) {
         self.expirationDate = expirationDate
+    }
+    
+    func set(notificationIdentifier: String) {
+        self.notificationIdentifier = notificationIdentifier
     }
 }

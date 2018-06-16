@@ -31,7 +31,7 @@ class FoodWrapper: NSObject {
     }
     
     /**
-     * Function that will update a grocery item
+     * Function that will update a food item
      */
     func update(foodItem: FoodModel, storageSpace: String, name: String, quantity: Int, image: String, expirationDate: Date) {
         try! realm.write {
@@ -40,6 +40,21 @@ class FoodWrapper: NSObject {
             foodItem.set(quantity: quantity)
             foodItem.set(image: image)
             foodItem.set(expirationDate: expirationDate)
+        }
+    }
+    
+    /**
+     * Function that will update a food item with a notification
+     * identifier.
+     */
+    func update(foodItem: FoodModel, storageSpace: String, name: String, quantity: Int, image: String, expirationDate: Date, notificationIdentifier: String) {
+        try! realm.write {
+            foodItem.set(storageSpace: storageSpace)
+            foodItem.set(name: name)
+            foodItem.set(quantity: quantity)
+            foodItem.set(image: image)
+            foodItem.set(expirationDate: expirationDate)
+            foodItem.set(notificationIdentifier: notificationIdentifier)
         }
     }
     

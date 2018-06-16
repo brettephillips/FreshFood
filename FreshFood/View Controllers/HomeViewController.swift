@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Photos
+import UserNotifications
 
 /**
  * Class that will display the food list to the
@@ -134,17 +135,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         //Check to see if the user clicked delete
         if editingStyle == .delete {
-            //Delete the row from the data source and realm
+            //Delete the row from the data source, realm, and notification system
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [foodList[indexPath.row].getNotificationIdentifier()])
             foodInstance.delete(foodItem: foodList[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
     
     /**
+     * Function to make the tableview rows larger.
+     */
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55.0
+    }
+    
+    /**
      * Overriden function to run everytime the view appears on the
      * screen.
      */
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         filterItems(storage: storageSpace)
     }
     
@@ -165,7 +174,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      * before navigation.
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //Check to see if this is a detail grocery item segue identifier
+        //Check to see if this is a detail food item segue identifier
         if segue.identifier == "DetailFoodItem" {
             //If so, get the path to the selected row and retrieve the food item
             let row = tableView.indexPathForSelectedRow?.row

@@ -16,7 +16,6 @@ import AVFoundation
 class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     //Instance variables
     var captureSession: AVCaptureSession = AVCaptureSession()
-    var captureDevice: AVCaptureDevice!
     var captureVideoPrevLayer: AVCaptureVideoPreviewLayer!
     var captureRectangle: UIView!
     var scannedItem: String!
@@ -36,7 +35,7 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
      * Overriden function to run everytime the view appears on the
      * screen.
      */
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         checkSession()
     }
     
@@ -46,25 +45,26 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
      */
     func initialSetUp() {
         //Set the input capture device to video and add it to the capture session
-        captureDevice = AVCaptureDevice.default(for: .video)
-        let captureInput = try? AVCaptureDeviceInput(device: captureDevice)
-        captureSession.addInput(captureInput!)
-        //Set the output capture to metadata and add it to the capture session
-        let captureOutput = AVCaptureMetadataOutput()
-        captureSession.addOutput(captureOutput)
-        //Set the delegate for the metadata and the metadata object types to retrieve
-        //Metadata object types are different barcode types
-        captureOutput.setMetadataObjectsDelegate(self, queue: .main)
-        captureOutput.metadataObjectTypes = [.upce, .ean13, .ean8]
-        //Check to see if the session is running
-        //At this time it should not be, so it will start
-        checkSession()
-        //Allows us to preview the video (layer) while we are capturing data
-        captureVideoPrevLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        //Sets the bounds of the layer and adds it to the view
-        captureVideoPrevLayer.videoGravity = .resizeAspectFill
-        captureVideoPrevLayer.frame = view.layer.bounds
-        view.layer.addSublayer(captureVideoPrevLayer)
+        if let captureDevice = AVCaptureDevice.default(for: .video) {
+            let captureInput = try? AVCaptureDeviceInput(device: captureDevice)
+            captureSession.addInput(captureInput!)
+            //Set the output capture to metadata and add it to the capture session
+            let captureOutput = AVCaptureMetadataOutput()
+            captureSession.addOutput(captureOutput)
+            //Set the delegate for the metadata and the metadata object types to retrieve
+            //Metadata object types are different barcode types
+            captureOutput.setMetadataObjectsDelegate(self, queue: .main)
+            captureOutput.metadataObjectTypes = [.upce, .ean13, .ean8]
+            //Check to see if the session is running
+            //At this time it should not be, so it will start
+            checkSession()
+            //Allows us to preview the video (layer) while we are capturing data
+            captureVideoPrevLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+            //Sets the bounds of the layer and adds it to the view
+            captureVideoPrevLayer.videoGravity = .resizeAspectFill
+            captureVideoPrevLayer.frame = view.layer.bounds
+            view.layer.addSublayer(captureVideoPrevLayer)
+        }
     }
     
     /**

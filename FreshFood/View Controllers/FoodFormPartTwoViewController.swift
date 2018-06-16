@@ -84,9 +84,24 @@ class FoodFormPartTwoViewController: UIViewController, UIImagePickerControllerDe
             imageController.delegate = self
             imageController.sourceType = .photoLibrary
             imageController.allowsEditing = false
+
+            //Set the tab text color, so the user can see it
+            //We switched it to white in the beginning
+            UINavigationBar.appearance().tintColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1.0)
+
             //Present the image controller
             self.present(imageController, animated: true, completion: nil)
         }
+    }
+    
+    /**
+     * Function that will run if the user cancels the
+     * picking of the image.
+     */
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        //Set the tab bar text back to white if cancelled and dismiss the controller
+        UINavigationBar.appearance().tintColor = UIColor.white
+        dismiss(animated: true, completion: nil)
     }
     
     /**
@@ -109,6 +124,9 @@ class FoodFormPartTwoViewController: UIViewController, UIImagePickerControllerDe
         //Assign it to the imageView, so the user can see it and dismiss the image picker controller
         image.image = imageChosen
         dismiss(animated: true, completion: nil)
+        
+        //Set the tab bar text back to white
+        UINavigationBar.appearance().tintColor = UIColor.white
     }
     
     /**

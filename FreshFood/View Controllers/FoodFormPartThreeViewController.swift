@@ -26,6 +26,7 @@ class FoodFormPartThreeViewController: UIViewController {
     var imageString: String = ""
     var foodInstance: FoodWrapper = FoodWrapper.foodInstance
     var segueIdentifier: String = ""
+    var notificationIdentifier: String = ""
     
     //IBOutlet variables
     @IBOutlet weak var expirationDate: UIDatePicker!
@@ -37,17 +38,36 @@ class FoodFormPartThreeViewController: UIViewController {
     @IBAction func add(_ sender: UIBarButtonItem) {
         //Check to see if this is an edit segue identifier
         if segueIdentifier == "EditFoodItem" {
-            //If yes, then update the food item
-            foodInstance.update(foodItem: foodItem, storageSpace: storageSpace, name: name, quantity: quantity, image: imageString, expirationDate: expirationDate.date)
+            //If yes, then check to see if there is a different date
+            if expirationDate.date != foodItem.getExpirationDate() {
+                //If yes remove the prior notification
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationIdentifier])
+
+                //Set a new notification
+                notificationIdentifier = String(arc4random())
+                
+                //Update the item with the new notification
+                foodInstance.update(foodItem: foodItem, storageSpace: storageSpace, name: name, quantity: quantity, image: imageString, expirationDate: expirationDate.date, notificationIdentifier: notificationIdentifier)
+                
+                //Set the notification
+                setNotification()
+            } else {
+                //If no, then keep the expiration
+                foodInstance.update(foodItem: foodItem, storageSpace: storageSpace, name: name, quantity: quantity, image: imageString, expirationDate: expirationDate.date)
+            }
         } else {
-            //Else, instantiate a new GroceryModel object
-            let foodItem = FoodModel(storageSpace: storageSpace, name: name, quantity: quantity, image: imageString, expirationDate: expirationDate.date)
-            //Add the grocery item to the array
+            //Set an identifier for the notification system
+            notificationIdentifier = String(arc4random())
+            
+            //Else, instantiate a new FoodModel object
+            let foodItem = FoodModel(storageSpace: storageSpace, name: name, quantity: quantity, image: imageString, expirationDate: expirationDate.date, notificationIdentifier: notificationIdentifier)
+            
+            //Add the food item to the array and set the notification
             foodInstance.add(foodItem: foodItem)
+            setNotification()
         }
         
-        //Set the notification for the item and send the user back to the root ViewController
-        setNotification()
+        //Send the user back to the root ViewController
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -77,7 +97,8 @@ class FoodFormPartThreeViewController: UIViewController {
             } else {
                 //If the item expires in 2 days or less, then notify
                 //them in a quarter of the time
-                //43200 seconds in quarter of a day
+                //43200 seconds in half of a day
+                //21600 seconds in quarter of a day
                 timeToNotify = daysTilExpiration * 21600
             }
             
@@ -114,7 +135,7 @@ class FoodFormPartThreeViewController: UIViewController {
         notificationContent.sound = UNNotificationSound.default()
         
         //Create the notification request object
-        let notificationRequest = UNNotificationRequest(identifier: "foodExpiration", content: notificationContent, trigger: notificationTime)
+        let notificationRequest = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: notificationTime)
         
         //Add the full notification to the user's notifications
         UNUserNotificationCenter.current().add(notificationRequest, withCompletionHandler: nil)
@@ -127,8 +148,9 @@ class FoodFormPartThreeViewController: UIViewController {
     func initialSetUp() {
         //Check to see if this is an edit segue identifier
         if segueIdentifier == "EditFoodItem" {
-            //Set the expiration date for the grocery item
+            //Set the expiration date and notification identifier for the food item
             expirationDate.date = foodItem.getExpirationDate()
+            notificationIdentifier = foodItem.getNotificationIdentifier()
             
             //Change the button to "Update"
             self.navigationItem.rightBarButtonItem?.title = "Update"

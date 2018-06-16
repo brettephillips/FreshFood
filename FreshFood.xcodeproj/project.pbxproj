@@ -19,6 +19,7 @@
 		BD4B10462086540A00F089EB /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4B10452086540A00F089EB /* Photos.framework */; };
 		BD4B10482086541200F089EB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4B10472086541200F089EB /* MessageUI.framework */; };
 		BD4B104A2086542E00F089EB /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4B10492086542E00F089EB /* UserNotifications.framework */; };
+		BD558B42208A2EA7003CB7C0 /* CommonMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD558B41208A2EA7003CB7C0 /* CommonMethods.swift */; };
 		BD615AC52069A881000FA501 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD615AC32069A880000FA501 /* RealmSwift.framework */; };
 		BD615AC62069A881000FA501 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD615AC32069A880000FA501 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BD615AC72069A881000FA501 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD615AC42069A881000FA501 /* Realm.framework */; };
@@ -65,6 +66,7 @@
 		BD4B10452086540A00F089EB /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		BD4B10472086541200F089EB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		BD4B10492086542E00F089EB /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		BD558B41208A2EA7003CB7C0 /* CommonMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMethods.swift; sourceTree = "<group>"; };
 		BD615AC32069A880000FA501 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		BD615AC42069A881000FA501 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		BD7CED3D206417B9007E2676 /* GroceryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		BD31A36E205AEFE700FDA4C8 /* FreshFood */ = {
 			isa = PBXGroup;
 			children = (
+				BD558B40208A2E83003CB7C0 /* Common */,
 				BD7CED41206417F4007E2676 /* Models */,
 				BD7CED40206417D7007E2676 /* View Controllers */,
 				BD7CED3F206417BF007E2676 /* Views */,
@@ -145,6 +148,14 @@
 				BD4B10452086540A00F089EB /* Photos.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BD558B40208A2E83003CB7C0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BD558B41208A2EA7003CB7C0 /* CommonMethods.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		BD7CED3F206417BF007E2676 /* Views */ = {
@@ -260,6 +271,7 @@
 			files = (
 				BD7CED5720641E1C007E2676 /* GroceryFormViewController.swift in Sources */,
 				BD7CED4D20641A96007E2676 /* FoodFormPartThreeViewController.swift in Sources */,
+				BD558B42208A2EA7003CB7C0 /* CommonMethods.swift in Sources */,
 				BD7CED3E206417B9007E2676 /* GroceryListViewController.swift in Sources */,
 				BD31A374205AEFE700FDA4C8 /* ScanViewController.swift in Sources */,
 				BD7CED4F20641B36007E2676 /* FoodModel.swift in Sources */,
